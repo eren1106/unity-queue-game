@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 1791066183076277073}
   - component: {fileID: 1791066183076277076}
   - component: {fileID: 3821031917142730738}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: YellowCar
-  m_TagString: Untagged
+  m_TagString: Car
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -126,6 +126,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carName: Yellow Car
+  speed: 0.3
+  priority: 1
 --- !u!50 &3821031917142730738
 Rigidbody2D:
   serializedVersion: 4

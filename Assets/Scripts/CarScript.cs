@@ -7,29 +7,27 @@ public class CarScript : MonoBehaviour
     [SerializeField]
     string carName;
     [SerializeField]
-    float speed = 0.05f;
+    float speed;
+    [SerializeField]
     int priority;
     Transform target;
     void Start()
     {
-        switch (carName)
-        {
-            case "Motorcycle":
-                priority = 4;
-                break;
-            case "Police Car":
-                priority = 3;
-                break;
-            case "Ambulance":
-                priority = 2;
-                break;
-            default:
-                priority = 1;
-                break;
-        }
+        
     }
 
-    void Update()
+    void FixedUpdate()
+    {
+        move();
+        checkDestroy();
+    }
+
+    public void setTarget(Transform _target)
+    {
+        target = _target;
+    }
+
+    void move()
     {
         if (transform.position.x > target.position.x + speed)
         {
@@ -45,16 +43,29 @@ public class CarScript : MonoBehaviour
         }
     }
 
-    public void setTarget(Transform _target)
+    public string getCarName()
     {
-        target = _target;
+        return carName;
     }
 
-    void move()
-    {
-        Vector3 direction = new Vector3(target.position.x - transform.position.x, 0, 0);
-        float distance = direction.magnitude;
-        float duration = 1.0f;
-        transform.Translate(direction * (Time.deltaTime * (distance / duration)));
+    void checkDestroy()
+    { //destroy this object when its position exceed certain boundaries
+        if (transform.position.x < -12f || transform.position.y < -10f)
+        {
+            Destroy(gameObject);
+        }
     }
+
+    public int getPriority()
+    {
+        return priority;
+    }
+
+    // private void OnCollisionEnter2D(Collision2D collision)
+    // {
+    //     if (collision.collider.tag == "Car")
+    //     {
+    //         Physics2D.IgnoreCollision(collision.collider, collision.otherCollider);
+    //     }
+    // }
 }

@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 1135563502279100183}
   - component: {fileID: 1135563502279100170}
   - component: {fileID: -4770294203734007648}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ambulance
-  m_TagString: Untagged
+  m_TagString: Car
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -126,6 +126,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carName: Ambulance
+  speed: 0.3
+  priority: 2
 --- !u!50 &-4770294203734007648
 Rigidbody2D:
   serializedVersion: 4

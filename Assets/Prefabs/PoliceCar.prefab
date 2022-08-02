@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 4333094159540388043}
   - component: {fileID: 4333094159540388040}
   - component: {fileID: -2540920636229966353}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PoliceCar
-  m_TagString: Untagged
+  m_TagString: Car
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -126,6 +126,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carName: Police Car
+  speed: 0.3
+  priority: 3
 --- !u!50 &-2540920636229966353
 Rigidbody2D:
   serializedVersion: 4
