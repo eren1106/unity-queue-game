@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class Game2Controller : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Game2Controller : MonoBehaviour
     [SerializeField] private GameObject[] _carPrefabs;
     [SerializeField] private RectTransform[] _spawnPoints;
     [SerializeField] private TextMeshProUGUI questionText;
+    [SerializeField] private bool isPriority;
     private static Canvas canvas;
     private static RectTransform[] targets;
     private static RectTransform[] spawnPoints;
@@ -36,7 +38,7 @@ public class Game2Controller : MonoBehaviour
         currentCars = new GameObject[targets.Length];
 
         //generate question
-        questionMaster = new Game2Questions();
+        questionMaster = new Game2Questions(isPriority);
         questionMaster.generateQuestion();
         questionText.text = questionMaster.getQuestionText();
     }
@@ -76,5 +78,17 @@ public class Game2Controller : MonoBehaviour
     {
         GameObject car = Instantiate(carPrefabs[index], spawnPoints[index].anchoredPosition, Quaternion.identity) as GameObject;
         car.transform.SetParent(canvas.transform, false);
+    }
+
+    public void submitAnswer(){
+        string[] ans = new string[4];
+        Array.Copy(questionMaster.getAnswers(), 0, ans , 0, questionMaster.getAnswers().Length);
+        for(int i = 0; i<ans.Length; i++){
+            if((currentCars[i] == null && ans[i] != null) || (currentCars[i] != null && currentCars[i].GetComponent<CarScript2>().getCarName() != ans[i])){
+                Debug.Log("Wrong!");
+                return;
+            }
+        }
+        Debug.Log("Correct!");
     }
 }

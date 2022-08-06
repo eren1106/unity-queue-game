@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Car
+public class Car : IComparable<Car>
 {
     private string carName;
     private int priority;
@@ -21,7 +22,7 @@ public class Car
                 setCar("Orange Car", 1);
                 break;
             case 3:
-                setCar("Ambulance Car", 2);
+                setCar("Ambulance", 2);
                 break;
             case 4:
                 setCar("Police Car", 3);
@@ -41,5 +42,14 @@ public class Car
     public string getCarName()
     {
         return carName;
+    }
+
+    public int getPriority(){
+        return priority;
+    }
+
+    public int CompareTo(Car obj)
+    {
+        return this.getPriority().CompareTo(obj.getPriority());
     }
 }

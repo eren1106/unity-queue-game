@@ -8,24 +8,51 @@ public class Game2Questions
     private string[] answers = new string[4];
     private Queue<Car> inQueue = new Queue<Car>();
     private Queue<Car> inPoll = new Queue<Car>();
+    private PriorityQueue<Car> pInQueue = new PriorityQueue<Car>();
     private bool isInQueue;
+    private bool isPriority;
+
+    public Game2Questions(bool isPriority)
+    {
+        this.isPriority = isPriority;
+    }
 
     public void generateQuestion()
     {
         isInQueue = Random.Range(0, 2) == 1 ? true : false; //1 -> inqueue, 0 -> inpoll
         int questionLine = 7;
         int currentLine = 0;
-        while (currentLine < questionLine)
+
+        if (isPriority)
         {
-            int rand = Random.Range(0, 2); // 0 -> dequeue, 1 -> enqueue
-            if ((rand == 0 && inQueue.Count == 0) || (rand == 1 && inQueue.Count == 4)) continue;
-            generateTask(rand);
-            currentLine++;
+            while (currentLine < questionLine)
+            {
+                int rand = Random.Range(0, 2); // 0 -> dequeue, 1 -> enqueue
+                if ((rand == 0 && pInQueue.Count == 0) || (rand == 1 && pInQueue.Count == 4)) continue;
+                generateTask(rand);
+                currentLine++;
+            }
         }
+        else
+        {
+            while (currentLine < questionLine)
+            {
+                int rand = Random.Range(0, 2); // 0 -> dequeue, 1 -> enqueue
+                if ((rand == 0 && inQueue.Count == 0) || (rand == 1 && inQueue.Count == 4)) continue;
+                generateTask(rand);
+                currentLine++;
+            }
+        }
+
         calculateAnswer();
 
-        Debug.Log(getQuestionText());
-        Debug.Log(isInQueue);
+        if(isInQueue){
+            questionText += "\r\nArrange the car(s) inside queue";
+        }
+        else{
+            questionText += "\r\nArrange the car(s) outside queue (poll)";
+        }
+
         getAnswers();
     }
 
@@ -34,11 +61,29 @@ public class Game2Questions
         if (num == 1)
         {
             Car car = new Car(Random.Range(0, 6));
-            inQueue.Enqueue(car);
+
+            if (isPriority)
+            {
+                pInQueue.Enqueue(car);
+            }
+            else
+            {
+                inQueue.Enqueue(car);
+            }
+
             questionText += "queue.offer(" + car.getCarName() + ");\r\n";
             return;
         }
-        inPoll.Enqueue(inQueue.Dequeue());
+
+        if (isPriority)
+        {
+            inPoll.Enqueue(pInQueue.Dequeue());
+        }
+        else
+        {
+            inPoll.Enqueue(inQueue.Dequeue());
+        }
+
         questionText += "queue.poll();\r\n";
     }
 
@@ -50,26 +95,48 @@ public class Game2Questions
     void calculateAnswer()
     {
         int i = 0;
-        if (isInQueue)
+
+        if (isPriority)
         {
-            while (inQueue.Count > 0)
+            if (isInQueue)
             {
-                answers[i] = inQueue.Dequeue().getCarName();
+                while (pInQueue.Count > 0)
+                {
+                    answers[i] = pInQueue.Dequeue().getCarName();
+                    i++;
+                }
+                return;
+            }
+            while (inPoll.Count > 0)
+            {
+                answers[i] = inPoll.Dequeue().getCarName();
                 i++;
             }
-            return;
         }
-        while (inPoll.Count > 0)
+        else
         {
-            answers[i] = inPoll.Dequeue().getCarName();
-            i++;
+            if (isInQueue)
+            {
+                while (inQueue.Count > 0)
+                {
+                    answers[i] = inQueue.Dequeue().getCarName();
+                    i++;
+                }
+                return;
+            }
+            while (inPoll.Count > 0)
+            {
+                answers[i] = inPoll.Dequeue().getCarName();
+                i++;
+            }
         }
     }
 
     public string[] getAnswers()
     {
         string answerText = "";
-        foreach(string ans in answers){
+        foreach (string ans in answers)
+        {
             answerText += ans + ", ";
         }
         Debug.Log(answerText);

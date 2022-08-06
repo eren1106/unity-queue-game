@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class CarScript2 : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     [SerializeField] private int carId;
+    [SerializeField] private string carName;
     private RectTransform rectTransform;
     private Vector2 prevTransform;
     private Vector3 oriLocalScale;
@@ -81,5 +82,9 @@ public class CarScript2 : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDr
         }
         currentIndex = targetIndex;
         Game2Controller.createNewCar(carId);
+    }
+
+    public string getCarName(){
+        return carName;
     }
 }
