@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Game2Controller : MonoBehaviour
 {
@@ -8,11 +9,13 @@ public class Game2Controller : MonoBehaviour
     [SerializeField] private RectTransform[] _targets;
     [SerializeField] private GameObject[] _carPrefabs;
     [SerializeField] private RectTransform[] _spawnPoints;
+    [SerializeField] private TextMeshProUGUI questionText;
     private static Canvas canvas;
     private static RectTransform[] targets;
     private static RectTransform[] spawnPoints;
     private static GameObject[] carPrefabs;
     private static GameObject[] currentCars;
+    private Game2Questions questionMaster;
 
     void Awake()
     {
@@ -31,6 +34,11 @@ public class Game2Controller : MonoBehaviour
         }
 
         currentCars = new GameObject[targets.Length];
+
+        //generate question
+        questionMaster = new Game2Questions();
+        questionMaster.generateQuestion();
+        questionText.text = questionMaster.getQuestionText();
     }
 
     // Update is called once per frame
@@ -66,7 +74,6 @@ public class Game2Controller : MonoBehaviour
 
     public static void createNewCar(int index)
     {
-        Debug.Log(index);
         GameObject car = Instantiate(carPrefabs[index], spawnPoints[index].anchoredPosition, Quaternion.identity) as GameObject;
         car.transform.SetParent(canvas.transform, false);
     }
