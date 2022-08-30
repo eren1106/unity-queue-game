@@ -3,27 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-    [SerializeField]
-    Transform[] points;
-    [SerializeField]
-    Transform spawnPoint;
-    [SerializeField]
-    Transform endPoint;
-    [SerializeField]
-    GameObject[] carPrefabs;
-    [SerializeField]
-    GameObject lightBeam;
-    [SerializeField]
-    GameObject peekText;
-    [SerializeField]
-    bool isPriority;
-    [SerializeField]
-    Image nextCarSprite;
-    [SerializeField]
-    TextMeshProUGUI nextCarName;
+    [SerializeField] Transform[] points;
+    [SerializeField] Transform spawnPoint;
+    [SerializeField] Transform endPoint;
+    [SerializeField] GameObject[] carPrefabs;
+    [SerializeField] GameObject lightBeam;
+    [SerializeField] GameObject peekText;
+    [SerializeField] bool isPriority;
+    [SerializeField] Image nextCarSprite;
+    [SerializeField] TextMeshProUGUI nextCarName;
+    [SerializeField] GameObject instructionPanel;
 
     private GameObject newCarPrefab;
     private GameObject[] currentCars;
@@ -77,6 +70,7 @@ public class GameController : MonoBehaviour
 
         generateNextCar();
         currentIndex++;
+        FindObjectOfType<AudioManager>().Play("Offer");
     }
 
     public void poll()
@@ -91,6 +85,7 @@ public class GameController : MonoBehaviour
             }
         }
         currentIndex--;
+        FindObjectOfType<AudioManager>().Play("Poll");
     }
 
     void moveCar(GameObject car, Transform target){
@@ -101,10 +96,21 @@ public class GameController : MonoBehaviour
         isPeek = !isPeek;
         lightBeam.SetActive(isPeek);
         peekText.SetActive(isPeek);
+        FindObjectOfType<AudioManager>().Play("Peek");
     }
 
     bool comparePriority(GameObject car1, GameObject car2){
         //return true if car1 > car2
         return car1.GetComponent<CarScript>().getPriority() > car2.GetComponent<CarScript>().getPriority();
+    }
+
+    public void toMenu(){
+        FindObjectOfType<AudioManager>().Play("Peek");
+        SceneManager.LoadScene("Menu");
+    }
+
+    public void closeInstructionPanel(){
+        FindObjectOfType<AudioManager>().Play("Peek");
+        instructionPanel.SetActive(false);
     }
 }

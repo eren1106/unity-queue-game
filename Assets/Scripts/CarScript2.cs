@@ -25,6 +25,7 @@ public class CarScript2 : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDr
     public void OnBeginDrag(PointerEventData eventData)
     {
         rectTransform.localScale = newLocalScale;
+        FindObjectOfType<AudioManager>().Play("Drag");
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -37,19 +38,23 @@ public class CarScript2 : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDr
         int nearestIndex = findNearest(rectTransform, Game2Controller.getTargets());
 
         if(nearestIndex == -1){ //back to previous position if the distance is too far from the target
-            backToPrev(); 
+            backToPrev();
+            FindObjectOfType<AudioManager>().Play("Drag");
             return;
         }
         if(currentIndex != -1 && nearestIndex == Game2Controller.getTargets().Length-1){ //destroy this gameobject when it move to delete icon
             Destroy(this.gameObject);
+            FindObjectOfType<AudioManager>().Play("Drop");
             return;
         }
         if(nearestIndex == currentIndex || Game2Controller.getCurrentCars()[nearestIndex] != null || nearestIndex == Game2Controller.getTargets().Length-1){ //back to prev if the index is same or already got car at thr
-            backToPrev(); 
+            backToPrev();
+            FindObjectOfType<AudioManager>().Play("Drag");
             return;
         }
         
         moveToTargets(nearestIndex);
+        FindObjectOfType<AudioManager>().Play("Drop");
     }
 
     int findNearest(RectTransform source, RectTransform[] targets){

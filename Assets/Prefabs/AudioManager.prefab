@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &304968827550484088
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 304968827550484090}
+  - component: {fileID: 304968827550484089}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &304968827550484090
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 304968827550484088}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &304968827550484089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 304968827550484088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 092bd0b847fe3834b88403ba518e300e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Offer
+    clip: {fileID: 8300000, guid: cc7306be507cf6247b3049cb7ea68d87, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+  - name: Peek
+    clip: {fileID: 8300000, guid: 90a87e485dd21b141abb205fa6650693, type: 3}
+    volume: 0.8
+    pitch: 0.7
+    source: {fileID: 0}
+  - name: Poll
+    clip: {fileID: 8300000, guid: be987ddc1a84aa24585fa2a1942ed4c9, type: 3}
+    volume: 1
+    pitch: 0.6
+    source: {fileID: 0}
+  - name: BGM
+    clip: {fileID: 8300000, guid: 27499bd3a9b21ff4cad959d560bb2aa8, type: 3}
+    volume: 0.4
+    pitch: 1
+    source: {fileID: 0}
+  - name: Drag
+    clip: {fileID: 8300000, guid: 9048baea0ed6e6a44b4a720d227e2b5d, type: 3}
+    volume: 0.5
+    pitch: 0.6
+    source: {fileID: 0}
+  - name: Drop
+    clip: {fileID: 8300000, guid: 697bb370c68a43e45a11368e15b0b071, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}
+  - name: Wrong
+    clip: {fileID: 8300000, guid: c21d2342223277a47b63c6fe76f8d6c6, type: 3}
+    volume: 0.6
+    pitch: 1
+    source: {fileID: 0}
+  - name: Correct
+    clip: {fileID: 8300000, guid: c3c95097307dfad44809596135251c81, type: 3}
+    volume: 1
+    pitch: 1
+    source: {fileID: 0}

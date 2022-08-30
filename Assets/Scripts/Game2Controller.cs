@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using UnityEngine.SceneManagement;
 
 public class Game2Controller : MonoBehaviour
 {
@@ -12,6 +13,11 @@ public class Game2Controller : MonoBehaviour
     [SerializeField] private RectTransform[] _spawnPoints;
     [SerializeField] private TextMeshProUGUI questionText;
     [SerializeField] private bool isPriority;
+    [SerializeField] private GameObject correctText;
+    [SerializeField] private GameObject wrongText;
+    [SerializeField] private GameObject retryButton;
+    [SerializeField] private GameObject nextButton;
+    [SerializeField] GameObject instructionPanel;
     private static Canvas canvas;
     private static RectTransform[] targets;
     private static RectTransform[] spawnPoints;
@@ -86,9 +92,43 @@ public class Game2Controller : MonoBehaviour
         for(int i = 0; i<ans.Length; i++){
             if((currentCars[i] == null && ans[i] != null) || (currentCars[i] != null && currentCars[i].GetComponent<CarScript2>().getCarName() != ans[i])){
                 Debug.Log("Wrong!");
+                retryButton.SetActive(true);
+                wrongText.SetActive(true);
+                FindObjectOfType<AudioManager>().Play("Wrong");
                 return;
             }
         }
         Debug.Log("Correct!");
+        nextButton.SetActive(true);
+        correctText.SetActive(true);
+        FindObjectOfType<AudioManager>().Play("Correct");
+    }
+
+    public void retry(){
+        retryButton.SetActive(false);
+        wrongText.SetActive(false);
+        FindObjectOfType<AudioManager>().Play("Peek");
+    }
+
+    public void next(){ //generate new question
+        questionMaster.generateQuestion();
+        questionText.text = questionMaster.getQuestionText();
+        foreach(GameObject car in currentCars){
+            if(car != null) Destroy(car);
+        }
+        currentCars = new GameObject[targets.Length];
+        nextButton.SetActive(false);
+        correctText.SetActive(false);
+        FindObjectOfType<AudioManager>().Play("Peek");
+    }
+
+    public void toMenu(){
+        FindObjectOfType<AudioManager>().Play("Peek");
+        SceneManager.LoadScene("Menu");
+    }
+
+    public void closeInstructionPanel(){
+        FindObjectOfType<AudioManager>().Play("Peek");
+        instructionPanel.SetActive(false);
     }
 }

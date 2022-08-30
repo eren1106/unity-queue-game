@@ -19,7 +19,7 @@ public class Game2Questions
 
     public void generateQuestion()
     {
-        isInQueue = Random.Range(0, 2) == 1 ? true : false; //1 -> inqueue, 0 -> inpoll
+        newGame();
         int questionLine = 7;
         int currentLine = 0;
 
@@ -46,10 +46,12 @@ public class Game2Questions
 
         calculateAnswer();
 
-        if(isInQueue){
+        if (isInQueue)
+        {
             questionText += "\r\nArrange the car(s) inside queue";
         }
-        else{
+        else
+        {
             questionText += "\r\nArrange the car(s) outside queue (poll)";
         }
 
@@ -65,26 +67,26 @@ public class Game2Questions
             if (isPriority)
             {
                 pInQueue.Enqueue(car);
+                questionText += "priorityQueue.offer(" + car.getCarName() + ");\r\n";
             }
             else
             {
                 inQueue.Enqueue(car);
+                questionText += "queue.offer(" + car.getCarName() + ");\r\n";
             }
-
-            questionText += "queue.offer(" + car.getCarName() + ");\r\n";
             return;
         }
 
         if (isPriority)
         {
             inPoll.Enqueue(pInQueue.Dequeue());
+            questionText += "priorityQueue.poll();\r\n";
         }
         else
         {
             inPoll.Enqueue(inQueue.Dequeue());
+            questionText += "queue.poll();\r\n";
         }
-
-        questionText += "queue.poll();\r\n";
     }
 
     public string getQuestionText()
@@ -141,5 +143,15 @@ public class Game2Questions
         }
         Debug.Log(answerText);
         return answers;
+    }
+
+    void newGame()
+    {
+        isInQueue = Random.Range(0, 2) == 1 ? true : false; //1 -> inqueue, 0 -> inpoll
+        questionText = "";
+        answers = new string[4];
+        inQueue = new Queue<Car>();
+        inPoll = new Queue<Car>();
+        pInQueue = new PriorityQueue<Car>();
     }
 }

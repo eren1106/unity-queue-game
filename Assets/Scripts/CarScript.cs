@@ -11,10 +11,6 @@ public class CarScript : MonoBehaviour
     [SerializeField]
     int priority;
     Transform target;
-    void Start()
-    {
-        
-    }
 
     void FixedUpdate()
     {
